@@ -72,8 +72,7 @@ class MyTimer:
             self.run_basic()
 
     def run_multiple_intervals(self):
-        while not self.timer_over:
-            if self.timer_repeats > 0:
+        if self.timer_repeats > 0:
                 # To Do time
                 #print('Start To Do')
                 self.current_timer_over = False
@@ -97,7 +96,7 @@ class MyTimer:
                 self.sound_effect['time_is_over'].play()
 
                 self.timer_repeats -=1
-            else:
+        else:
                 self.run_basic()
                 
 

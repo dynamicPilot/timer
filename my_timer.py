@@ -216,8 +216,9 @@ class SimpleTimer(MyTimer):
 
     # Main
     def start_timer_run(self):
-        self.create_start_menu()
-        self.run_multiple_intervals()
+        while not self.timer_over:
+            self.create_start_menu()
+            self.run_multiple_intervals()
 
             
 def main():
