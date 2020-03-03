@@ -12,12 +12,14 @@ from general_object import GeneralObject
 from text_object import TextObject
 
 class Button(GeneralObject):
-    def __init__ (self, x, y, w, h, button_normal_back_color, text, on_click = lambda x: None, padding = 0):
+    def __init__ (self, x, y, w, h, button_color_dict, text, text_color, on_click = lambda x: None, key = None):
         GeneralObject.__init__(self, x, y, w, h)
         self.state = 'normal'
-        self.button_normal_back_color = button_normal_back_color
+        self.button_color_dict = button_color_dict
         self.on_click = on_click
-        self.text = TextObject(self.centerx, self.centery, lambda: text, c.button_text_color, c.button_font_name, c.button_font_size, True)
+        self.text_color = text_color
+        self.key = key
+        self.text = TextObject(self.centerx, self.centery, lambda: text, self.text_color, c.button_font_name, c.button_font_size, True)
 
     def draw(self, surface):
         pygame.draw.rect(surface, self.back_color, self.rect)
@@ -44,12 +46,15 @@ class Button(GeneralObject):
 
     def handle_mouse_up(self, pos):
         if self.state == 'pressed':
-            self.on_click(self)
+            if self.key is not None:
+                self.on_click(self, self.key)
+            else:
+                self.on_click(self)
             self.state = 'hover'
 
     @property
     def back_color(self):
-        return {'normal': self.button_normal_back_color, 'hover': c.button_color_hover, 'pressed': c.button_color_pressed}[self.state]
+        return self.button_color_dict[self.state]
 
 
     

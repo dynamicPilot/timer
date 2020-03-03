@@ -26,6 +26,8 @@ class MyTimer:
         self.set_time_in_minutes = 0
         self.set_time_in_seconds = 0
 
+        self.style_mode = 'light'
+
         pygame.mixer.pre_init(44100, 16, 2, 4096)
         pygame.init()
         pygame.font.init()
@@ -55,43 +57,49 @@ class MyTimer:
                 for handler in self.mouse_handlers:
                     handler(event.type, event.pos)
 
+    def run_basic(self):
+        self.surface.fill(c.w_color[self.style_mode])
+            
+        self.handle_events()
+        self.update()
+        self.draw()
+
+        pygame.display.update()
+        self.clock.tick(self.frame_rate) 
+
     def run(self):
         while not self.current_timer_over:
-            self.surface.fill(c.w_color)
-            
-            self.handle_events()
-            self.update()
-            self.draw()
-
-            pygame.display.update()
-            self.clock.tick(self.frame_rate) 
+            self.run_basic()
 
     def run_multiple_intervals(self):
         while not self.timer_over:
             if self.timer_repeats > 0:
                 # To Do time
-                print('Start To Do')
+                #print('Start To Do')
                 self.current_timer_over = False
                 self.do_time = True
                 self.rest_time = False
                 self.set_time_in_minutes = self.timer_do_interval
                 self.set_time_in_seconds = self.set_time_in_minutes*60
                 self.run()
-                print('To do time is over')
+                #print('To do time is over')
                 self.sound_effect['time_is_over'].play()
 
                 # Rest time
-                print('Start rest')
+                #print('Start rest')
                 self.current_timer_over = False
                 self.do_time = False
                 self.rest_time = True
                 self.set_time_in_minutes = self.timer_rest_interval
                 self.set_time_in_seconds = self.set_time_in_minutes*60
                 self.run()
-                print('Rest time is over')
+                #print('Rest time is over')
                 self.sound_effect['time_is_over'].play()
 
                 self.timer_repeats -=1
+            else:
+                self.run_basic()
+                
 
 
 
