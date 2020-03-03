@@ -7,6 +7,9 @@ w_color = colors.WHITE
 
 frame_rate = 10
 message_duration = 2
+timer_repeats = 3
+timer_rest_interval = 1
+timer_do_interval = 2
 
 margin = 10
 
@@ -30,7 +33,7 @@ clock_text_color = colors.DIMGRAY
 clock_font_size = 25
 clock_font_name = 'Century'
 
-button_x_size = 50
+button_x_size = 60
 button_y_size = 50
 button_y = w_y_size/2 + clock_y/2 + margin
 button_center_x = w_x_size/2 - button_x_size/2
@@ -44,3 +47,15 @@ button_params = {'Start': [button_center_x - button_margin - button_x_size, butt
 button_font_size = 15
 button_font_name = 'Century'
 button_text_color = colors.DIMGRAY
+
+mode_x_size = 150
+mode_y_size = 50
+mode_x = (w_x_size - mode_x_size)/2
+mode_y = w_y_size/2 - clock_y/2 - margin - mode_y_size
+mode_color = colors.WHITE
+
+mode_text_color = colors.DIMGRAY
+mode_font_size = 20
+mode_font_name = 'Century'
+
+sounds_effect = {'time_is_over': 'uku.wav'}

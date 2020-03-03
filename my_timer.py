@@ -24,8 +24,8 @@ class SimpleTimer(MyTimer):
         MyTimer.__init__(self, 'Timer', c.w_x_size, c.w_y_size, c.frame_rate)
 
         self.clock_display = None
-        self.set_time_in_minutes = 1
-        self.set_time_in_seconds = self.set_time_in_minutes*60
+        self.mode_display = None
+        
         self.start_time = None
         self.pause_time = None
         self.time_over = False
@@ -36,6 +36,9 @@ class SimpleTimer(MyTimer):
         self.start_timer = False
         self.is_timer_running = False
         self.pause_timer = False
+
+        self.clock_text = None
+        self.mode_text = None
         
     def show_message(self, text, color=colors.GRAY24, font_name='Arial', font_size=20, centralized=False):
         message = TextObject(c.w_x_size // 2, c.w_y_size // 2, lambda: text, color, font_name, font_size, True)
@@ -56,6 +59,23 @@ class SimpleTimer(MyTimer):
         self.clock_text = TextObject(self.clock_display.centerx, self.clock_display.centery, self.text_for_time, c.clock_text_color, c.clock_font_name, c.clock_font_size, True)
         self.objects.append(self.clock_display)
         self.objects.append(self.clock_text)
+
+    def create_mode_display(self):
+        self.mode_display = ClockDisplay(c.mode_x, c.mode_y, c.mode_x_size, c.mode_y_size, c.mode_color)
+        self.mode_text = TextObject(self.mode_display.centerx, self.mode_display.centery, self.text_for_mode, c.mode_text_color, c.mode_font_name, c.mode_font_size, True)
+        self.objects.append(self.mode_display)
+        self.objects.append(self.mode_text)
+
+    def text_for_mode(self):
+        if self.start_time is None:
+            return ''
+        else:
+            if self.do_time:
+                return 'Work time...'
+            elif self.rest_time:
+                return 'Rest time...'
+            else:
+                return ''
 
     def text_for_time(self):
         if self.start_time is None:
@@ -81,6 +101,7 @@ class SimpleTimer(MyTimer):
             self.is_timer_running = False
             self.pause_timer = False
             self.start_time = None
+            self.current_timer_over = True
 
         actions = {'Start': on_start_timer, 'Pause': on_pause_timer, 'End': on_end_timer}
         for key, value in actions.items():
@@ -94,6 +115,7 @@ class SimpleTimer(MyTimer):
         self.create_canvas()
         self.create_clock_display()
         self.create_menu()
+        self.create_mode_display()
 
 
     def update(self):
@@ -122,12 +144,13 @@ class SimpleTimer(MyTimer):
             #self.show_message('Time is over!', centralized=True)
             #self.timer_over = True
             self.start_time = None
-            self.start_timer = False
+            self.start_timer = True
+            self.current_timer_over = True
 
     # Main
     def start_timer_run(self):
         self.create_objects()
-        self.run()
+        self.run_multiple_intervals()
 
             
 def main():
