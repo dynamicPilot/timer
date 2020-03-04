@@ -72,32 +72,33 @@ class MyTimer:
             self.run_basic()
 
     def run_multiple_intervals(self):
-        if self.timer_repeats > 0:
-                # To Do time
-                #print('Start To Do')
-                self.current_timer_over = False
-                self.do_time = True
-                self.rest_time = False
-                self.set_time_in_minutes = self.timer_do_interval
-                self.set_time_in_seconds = self.set_time_in_minutes*60
-                self.run()
-                #print('To do time is over')
-                self.sound_effect['time_is_over'].play()
+        while self.timer_repeats > 0:
+            # To Do time
+            print('Start To Do')
+            self.current_timer_over = False
+            self.do_time = True
+            self.rest_time = False
+            self.set_time_in_minutes = self.timer_do_interval
+            self.set_time_in_seconds = self.set_time_in_minutes*60
+            self.run()
+            print('To do time is over')
+            self.sound_effect['time_is_over'].play()
 
-                # Rest time
-                #print('Start rest')
-                self.current_timer_over = False
-                self.do_time = False
-                self.rest_time = True
-                self.set_time_in_minutes = self.timer_rest_interval
-                self.set_time_in_seconds = self.set_time_in_minutes*60
-                self.run()
-                #print('Rest time is over')
-                self.sound_effect['time_is_over'].play()
-
-                self.timer_repeats -=1
-        else:
-                self.run_basic()
+            # Rest time
+            print('Start rest')
+            self.current_timer_over = False
+            self.do_time = False
+            self.rest_time = True
+            self.set_time_in_minutes = self.timer_rest_interval
+            self.set_time_in_seconds = self.set_time_in_minutes*60
+            self.run()
+            print('Rest time is over')
+            self.sound_effect['time_is_over'].play()
+            
+            self.timer_repeats -=1
+  
+    
+        self.run_basic()
                 
 
 

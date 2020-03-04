@@ -1,5 +1,5 @@
 """
-The main class of the game that defines the display, game objects, methods, rules, etc.
+The main class of the timer that defines the display, objects, methods, etc.
 
 """
 
@@ -34,7 +34,6 @@ class SimpleTimer(MyTimer):
         self.is_timer_running = False
         self.pause_timer = False
 
-        # Variables to handle starting settings
         self.start_menu_objects = []
         
     def show_message(self, text, color=colors.GRAY24, font_name='Century', font_size=20, centralized=False):
@@ -89,7 +88,7 @@ class SimpleTimer(MyTimer):
 
     def text_for_mode(self):
         if self.start_time is None:
-            return ''
+            return 'Press Start...'
         else:
             if self.do_time:
                 return 'Work time...'
@@ -106,7 +105,7 @@ class SimpleTimer(MyTimer):
                 self.current_delta = self.time_delta_to_stop.seconds - (datetime.now() - self.start_time).seconds
             return '{:02d} : {:02d}'.format(self.current_delta//60, self.current_delta % 60)
 
-    # Create menu
+    # Create timer menu
     def create_menu(self):
         def on_start_timer(button):
             self.start_timer = True
@@ -115,8 +114,12 @@ class SimpleTimer(MyTimer):
         def on_pause_timer(button):
             self.pause_timer = True
             self.is_timer_running = False
+            # Set time when pause
             if self.start_time is not None:
                 self.pause_time = datetime.now()
+            # To catch error when press Pause before start
+            if self.start_time is None and not self.start_timer:
+                self.pause_timer = False
 
         def on_end_timer(button):
             self.start_timer = False
@@ -132,8 +135,22 @@ class SimpleTimer(MyTimer):
             self.menu_buttons.append(but)
             self.mouse_handlers.append(but.handle_mouse_event)
 
-    def create_start_menu(self):
+    def new_circle_prep(self):
 
+        self.start_timer = False
+        self.pause_timer = False
+        self.start_time = None
+        self.pause_time = None
+        self.time_delta_to_stop = None
+        self.current_delta = None
+
+        self.current_timer_over = False
+
+        self.create_objects()
+
+    # Create start menu
+    def create_start_menu(self):
+        
         self.is_timer_running = False
 
         def on_close_start_menu(button):
@@ -174,6 +191,7 @@ class SimpleTimer(MyTimer):
 
     def remove_start_menu(self):
         self.objects = []
+        self.new_circle_prep()
         self.create_objects()
 
     def create_objects(self):
@@ -191,11 +209,11 @@ class SimpleTimer(MyTimer):
         
         if self.start_timer:
             self.start_timer = False
-            self.time_over = False
-            #self.show_message('Start Timer...', centralized=True)
+            # Set time when timer begins 
             if self.start_time is None:
                 self.start_time = datetime.now()
                 self.time_delta_to_stop = timedelta(seconds = self.set_time_in_seconds)
+            # Handle the end of a pause
             if self.pause_timer == True:
                 self.pause_timer = False
                 if self.pause_time is not None:
@@ -208,8 +226,6 @@ class SimpleTimer(MyTimer):
         super().update()
         
         if self.time_over:
-            #self.show_message('Time is over!', centralized=True)
-            #self.timer_over = True
             self.start_time = None
             self.start_timer = True
             self.current_timer_over = True

@@ -9,8 +9,8 @@ frame_rate = 10
 message_duration = 2
 
 timer_repeats = 1
-timer_rest_interval = 1
-timer_do_interval = 1
+timer_rest_interval = 5
+timer_do_interval = 25
 
 margin = 10
 
