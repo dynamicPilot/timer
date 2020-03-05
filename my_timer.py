@@ -143,6 +143,7 @@ class SimpleTimer(MyTimer):
         self.pause_time = None
         self.time_delta_to_stop = None
         self.current_delta = None
+        self.time_over = False
 
         self.current_timer_over = False
 
@@ -209,6 +210,7 @@ class SimpleTimer(MyTimer):
         
         if self.start_timer:
             self.start_timer = False
+            self.time_over = False
             # Set time when timer begins 
             if self.start_time is None:
                 self.start_time = datetime.now()
