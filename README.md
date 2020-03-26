@@ -20,7 +20,9 @@ To use 'Cycle timer' locally you should have:
 * Python 3.x
 * PyGame
 Start app by running:
-`python my_timer.py
+```
+python my_timer.py
+```
 
 The duration of work and rest time periods can be change in config.py.
 
