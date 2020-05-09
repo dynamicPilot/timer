@@ -77,7 +77,7 @@ class SimpleTimer(MyTimer):
         self.start_menu_objects.append(display_text)
 
         display = ClockDisplay(c.start_menu_display_x, c.start_menu_up_display_y, c.start_menu_display_x_size, c.start_menu_display_y_size, c.start_menu_display_color)
-        display_text = TextObject(display.centerx, display.centery, lambda: 'Set cicles number...', c.start_menu_display_text_color, c.start_menu_display_font_name, c.start_menu_display_font_size, True)
+        display_text = TextObject(display.centerx, display.centery, lambda: 'Set cycles number...', c.start_menu_display_text_color, c.start_menu_display_font_name, c.start_menu_display_font_size, True)
         self.objects.append(display)
         self.objects.append(display_text)
         self.start_menu_objects.append(display)
