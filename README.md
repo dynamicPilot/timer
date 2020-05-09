@@ -8,7 +8,7 @@ App helps to stay focus by following the Pomodoro Technique.
 * Different number of the 'work-rest' cycles (from 1 up to 4).
 * Three color themes: light, dark and violet.
 * 'Pause' and 'Stop' features.
-* Sound alarm to end of the cycle detection.
+* Sound alarm to the end of the cycle detection.
 
 ## Technologies
 * Python 3.7
